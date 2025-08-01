@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 app.use(express.json()) // to use json parser
 
-const persons = [
+let persons = [
     { 
       "id": 1,
       "name": "Arto Hellas", 
@@ -36,6 +36,16 @@ app.get("/api/persons/:id", (req, res) => {
         return res.status(404).end()
     }
     res.json(person)
+})
+
+app.delete("/api/persons/:id", (req, res) => {
+    const id = Number(req.params.id)
+    const person = persons.find(p => p.id === id)
+    if (!person){
+        return res.status(404).end()
+    }
+    persons = persons.filter(p => p.id !== id)
+    res.status(204).end()
 })
 
 
