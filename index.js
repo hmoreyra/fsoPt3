@@ -48,6 +48,24 @@ app.delete("/api/persons/:id", (req, res) => {
     res.status(204).end()
 })
 
+app.post("/api/persons", (req, res) => {
+    const body = req.body
+    const id = Math.floor(Math.random() * 1000000)
+    if (!body.name || body.name === ''){
+        return res.status(400).json({error: "name is missing"})
+    }
+    if(!body.number || body.number === ''){
+        return res.status(400).json({error: "number is missing"})
+    }
+    const newPerson = {
+        id,
+        name: body.name,
+        number: body.number
+    }
+    persons = persons.concat(newPerson)
+    res.status(201).json(newPerson)
+})
+
 
 app.get("/info", (req, res) => {
     res.send(`
