@@ -1,8 +1,12 @@
 const express = require('express')
 const morgan = require('morgan')
+
 const app = express()
+
+// setting middlewares
 app.use(express.json()) // to use json parser
-app.use(morgan('tiny'))
+morgan.token('body', req => JSON.stringify(req.body)) // creating new token called "body"
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 let persons = [
     { 
